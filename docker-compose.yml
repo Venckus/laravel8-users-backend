@@ -1,0 +1,66 @@
+# Docker-compose configuration, used for development environment
+version: "3"
+
+networks:
+  webapp:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    restart: always
+    tty: true
+    volumes:
+      - .:/var/www/html
+      - .docker/nginx.conf:/etc/nginx/nginx.conf
+    # ports:
+    #     - 8081:8000
+    # command: php artisan serve
+    depends_on:
+      - mysql
+    networks:
+      - webapp
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/var/www/html
+      - .docker/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8081:80"
+    #   - "443:443"
+    networks:
+      - webapp
+
+  mysql:
+    image: mysql:8
+    restart: always
+    tty: true
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: webapp
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_NAME: mysql
+    networks:
+      - webapp
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+        - 8082:80
+    environment:
+        - PMA_ARBITRARY=1
+    networks:
+        - webapp
+
+volumes:
+    dbdata:
