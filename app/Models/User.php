@@ -12,14 +12,49 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * @var string
+     */
+    public const ID_COL = 'id';
+
+    /**
+     * @var string
+     */
+    public const NAME_COL = 'name';
+
+    /**
+     * @var string
+     */
+    public const SURNAME_COL = 'surname';
+
+    /**
+     * @var string
+     */
+    public const EMAIL_COL = 'email';
+
+    /**
+     * @var string
+     */
+    public const FULL_NAME_COL = 'full_name';
+
+    /**
+     * @var string
+     */
+    public const VIEWS_COUNT_COL = 'views_count';
+
+    /**
+     * @var string
+     */
+    public const CREATED_AT_COL = 'created_at';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
-        'surname',
-        'email',
+        self::NAME_COL,
+        self::SURNAME_COL,
+        self::EMAIL_COL,
         'password',
     ];
 
@@ -47,11 +82,24 @@ class User extends Authenticatable
      * 
      * @var array
      */
-    protected $appends = ['full_name'];
+    protected $appends = [
+        self::FULL_NAME_COL
+    ];
 
 
     public function getFullNameAttribute(): string
     {
         return "{$this->name} {$this->surname}";
+    }
+
+
+    /**
+     * @param int $benchmark
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMostPopular($query, $benchmark = 10)
+    {
+        return $query->where(self::VIEWS_COUNT_COL, '>', $benchmark);
     }
 }

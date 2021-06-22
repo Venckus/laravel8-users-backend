@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('base');
 });
 
-Route::get('/user/random', [UserController::class, 'getRandom'])->name('random.user');
+Route::get('/user/random', [UserController::class, 'getRandom'])
+    ->name('random.user');
+
+Route::get(
+    'user/most-popular/{benchmark?}',
+    [UserController::class, 'getMostPopular']
+)->name('most.popular.users');
+
 Route::resource('user', App\Http\Controllers\UserController::class)
     ->only(['index', 'show']);
