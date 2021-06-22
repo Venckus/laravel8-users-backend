@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('base');
 });
+
+Route::get('/user/random', [UserController::class, 'getRandom'])->name('random.user');
+Route::resource('user', App\Http\Controllers\UserController::class)
+    ->only(['index', 'show']);

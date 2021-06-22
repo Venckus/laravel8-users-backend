@@ -10,6 +10,7 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile
+    container_name: app
     restart: always
     tty: true
     volumes:
@@ -26,7 +27,7 @@ services:
   webserver:
     image: nginx:alpine
     container_name: webserver
-    restart: unless-stopped
+    restart: always
     tty: true
     volumes:
       - .:/var/www/html
