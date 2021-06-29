@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,7 @@ Route::get(
 
 Route::resource('user', App\Http\Controllers\UserController::class)
     ->only(['index', 'show']);
+
+Route::get('{param}/like/{searchterm}', function ($param, $searchterm) {
+    dd(User::whereLike($param, $searchterm)->get());
+})->name('like');

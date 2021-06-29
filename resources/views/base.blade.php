@@ -29,7 +29,12 @@
                     <li><a href="{{ route('user.index') }}">All users</a></li>
                     <li><a href="{{ route('random.user') }}">Random user</a></li>
                     <li><a href="{{ route('user.show', 1) }}">One user</a></li>
-                    <li><a href="{{ route('most.popular.users') }}">Users with 10+ views</a></li>
+                    <li>
+                        <a href="{{ route('most.popular.users') }}">Users with 10+ views</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/email/like/john') }}">Users email containing 'john'</a>
+                    </li>
                 </ul>
             </nav>
         </header>
