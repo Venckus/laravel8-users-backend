@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-// use App\Services\UserService;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -16,7 +15,6 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        // Builder::mixin(new UserService());
     }
 
     /**
