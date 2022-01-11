@@ -1,4 +1,3 @@
-# Docker-compose configuration, used for development environment
 version: "3"
 
 networks:
