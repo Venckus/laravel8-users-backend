@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\UserViewed;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -56,6 +57,13 @@ class User extends Authenticatable
         self::SURNAME_COL,
         self::EMAIL_COL,
         'password',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'retrieved' => UserViewed::class,
     ];
 
     /**
