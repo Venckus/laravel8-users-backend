@@ -11,7 +11,6 @@ class UserController extends Controller
     
     public function index(): void
     {
-        User::increment(User::VIEWS_COUNT_COL, 1);
         $allUsers = User::all();
         dd($allUsers);
     }
@@ -20,7 +19,6 @@ class UserController extends Controller
     public function getRandom(): void
     {
         $randomUser = User::inRandomOrder()->first();
-        $randomUser->increment(User::VIEWS_COUNT_COL, 1);
         $randomUserArr = $randomUser->toArray();
         dd($randomUserArr);
     }
@@ -32,17 +30,18 @@ class UserController extends Controller
             User::NAME_COL,
             User::SURNAME_COL,
             User::EMAIL_COL,
-            User::CREATED_AT_COL
+            User::CREATED_AT_COL,
+            User::VIEWS_COUNT_COL
         )
             ->where(User::ID_COL, $id)
             ->first();
         if ($user) {
-            $user->increment(User::VIEWS_COUNT_COL, 1);
             $userArr = $user->toArray();
             unset(
                 $userArr[User::NAME_COL], 
-                $userArr[User::SURNAME_COL], 
-                $userArr[User::VIEWS_COUNT_COL]);
+                $userArr[User::SURNAME_COL]
+                // $userArr[User::VIEWS_COUNT_COL]
+            );
             dd($userArr);
         } else {
             dd("User with id: $id does not exist!");
